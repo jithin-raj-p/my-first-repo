@@ -1,22 +1,31 @@
-#!/usr/bin/bash
-filecount=`ls -ltr|wc -l`
-echo "Your current directory is `pwd`"
+#!/bin/sh
+
+filecount=`ls -la | wc -l`
+
+echo "Your current diectory is `pwd`"
+
 function guess {
-echo "Hi, Please guess how many files are in current directory !"
-read count
-echo "You guesses number of files as $count"
-echo "Validating....!!"
+
+        echo "Hi, please guess how many files are there in your current directory"
+        read count
+        if ! [[ $count =~ ^[0-9]+$ ]];then
+                echo " You should enter a valid number"
+                exit 0;
+        else
+                echo "Validating....."
+        fi
 }
+
 guess
-while [[ $count != $filecount ]] 
+
+while [[ $count != $filecount ]]
 do
-if [[ $count -lt $filecount ]];then
-    echo "Your guess is too low"
-    echo "Please try again"
-elif [[ $count -gt $filecount ]];then
-      echo "Your guess is too high"
-      echo "Please try again"
-fi
-guess
+        if [[ $count -lt $filecount ]];then
+                echo "Your guess is too low.."
+        elif [[ $count -gt $filecount ]];then
+                echo "Your guess is too high.."
+        fi
+        guess
 done
-echo " Congrats you correctly guessed the file count"
+
+echo "Congrats You correctly guessed...!!"
